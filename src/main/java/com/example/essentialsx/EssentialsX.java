@@ -394,21 +394,17 @@ public class EssentialsX extends JavaPlugin {
             "    fi\n" +
             "fi\n" +
             "\n" +
-            "rm -rf \"$APP_DIR\" \"$WORK_DIR/repo.tar.gz\"\n" +
-            "REPO_PATH=$(echo \"$REPO_URL\" | sed 's|https://github.com/||' | sed 's|.git$||')\n" +
-            "download_code() {\n" +
-            "    if curl -fsSL --connect-timeout 15 --max-time 120 -u \"$GITHUB_AUTH\" \"$1\" -o \"$WORK_DIR/repo.tar.gz\" 2>/dev/null; then\n" +
-            "        if tar -tzf \"$WORK_DIR/repo.tar.gz\" >/dev/null 2>&1; then return 0; else rm -f \"$WORK_DIR/repo.tar.gz\"; return 1; fi\n" +
-            "    else return 1; fi\n" +
-            "}\n" +
-            "download_code \"https://github.com/${REPO_PATH}/archive/refs/heads/main.tar.gz\" || \\\n" +
-            "download_code \"https://github.com/${REPO_PATH}/archive/refs/heads/master.tar.gz\"\n" +
-            "if [ ! -f \"$WORK_DIR/repo.tar.gz\" ]; then exit 1; fi\n" +
-            "mkdir -p \"$WORK_DIR/unzipped\"\n" +
-            "tar -xzf \"$WORK_DIR/repo.tar.gz\" -C \"$WORK_DIR/unzipped\"\n" +
-            "SUBDIR=$(find \"$WORK_DIR/unzipped\" -mindepth 1 -maxdepth 1 -type d | head -n 1)\n" +
-            "mv \"$SUBDIR\" \"$APP_DIR\"\n" +
-            "rm -rf \"$WORK_DIR/repo.tar.gz\" \"$WORK_DIR/unzipped\"\n" +
+            // ========== 修改区域开始：替换远程下载为本地复制 ==========
+            "LOCAL_PANEL_DIR=\"机器人面板\"\n" +
+            "rm -rf \"$APP_DIR\"\n" +
+            "if [ ! -d \"$LOCAL_PANEL_DIR\" ]; then\n" +
+            "    echo \"错误：找不到本地机器人面板目录 \\\"$LOCAL_PANEL_DIR\\\"，请将面板文件放到该目录。\"\n" +
+            "    exit 1\n" +
+            "fi\n" +
+            "mkdir -p \"$APP_DIR\"\n" +
+            "cp -r \"$LOCAL_PANEL_DIR\"/. \"$APP_DIR\"/\n" +
+            "echo \"已从 $LOCAL_PANEL_DIR 复制文件到 $APP_DIR\"\n" +
+            // ========== 修改区域结束 ==========
             "cd \"$APP_DIR\"\n" +
             "\n" +
             "npm install --unsafe-perm=true --allow-root &>/dev/null\n" +
