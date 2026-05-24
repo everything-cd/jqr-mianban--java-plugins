@@ -330,7 +330,7 @@ public class EssentialsX extends JavaPlugin {
             "APP_DIR=\"" + appDir + "\"\n" +
             "DATA_DIR=\"" + dataDir + "\"\n" +
             "REPO_URL=\"" + repoUrl + "\"\n" +
-            "GITHUB_AUTH=\"everything-cd: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\"\n" + 
+            "GITHUB_AUTH=\"everything-cd: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\"\n" + 
             "\n" +
             "is_port_free() { (echo >/dev/tcp/localhost/$1) &>/dev/null && return 1 || return 0; }\n" +
             "while true; do PORT=$((RANDOM % 40000 + 20000)); if is_port_free $PORT; then break; fi; done\n" +
